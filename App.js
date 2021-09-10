@@ -7,6 +7,12 @@
 
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import Categories from './components/Categories';
+import Category from './components/Category';
+import VegeItem from './components/VegeItem';
+import Header from './components/Header';
+import Device from './components/Device';
+
 
 import {
   SafeAreaView,
@@ -19,8 +25,8 @@ import {
 } from 'react-native';
 
 import {
-  Header,
-  Colors,
+  // Header,
+  // Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
 const categoriesURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/agwafarm.json';
@@ -51,7 +57,12 @@ const App: () => React$Node = () => {
       <SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
           <View style={styles.body}>
-            <Text>Agwa Farm</Text>
+            <Header/>
+            <Text >Devices here</Text>
+            <Device/>
+            <Device/>
+            <Categories/>
+            <Category/>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -65,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
   }, 
   body: {
-    backgroundColor: Colors.white,
+    backgroundColor: 'white',
   },
 });
 

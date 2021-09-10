@@ -15,7 +15,7 @@ import {
 const categoriesURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/agwafarm.json';
 
 const Categories = ()=>{
-  const [categories, setCategories] = useState();
+  const [categoriesData, setCategoriesData] = useState();
   console.log('hello from Categories');
 
   useEffect(() => {
@@ -24,16 +24,28 @@ const Categories = ()=>{
   }, []);
 
     const getCategories = async ()=>{
-    const categories = await axios.get(categoriesURL);
-    setCategories(categories);
-    // console.log('\n categories', categories)
-    // console.log('\n\n categories30', categories.request)
-    console.log('\n\n categories31:', categories.request._response)    
-    console.log('\n\n categories32: ', categories.request._response)
+    const response = await axios.get(categoriesURL);
+    const data = JSON.parse(response.request._response)
+    setCategoriesData(data);
+    console.log('\n\n categories35: ', categoriesData.categories[0].name)
+    console.log('\n\n categories35: ', categoriesData.categories[0])
+    // console.log('\n\n categories35: ', categories.categories[1].name)
+    // console.log('\n\n categories35: ', categories.categories[2].name)
+    // console.log('\n\n categories35: ', categories.categories[2].plants)
+    // console.log('\n\n categories35: ', categories.categories[2].plants[0].name)
+    // console.log('\n\n categories35: ', categories.categories[2].plants[1].name)
+    // console.log('\n\n categories35: ', categories.categories[2].plants[2].name)
   }//getCategories
+
+  const renderCategories = categoriesData.categories.map((categoryName)=>{
+    return(
+      <Text>{categoryName.name}</Text>
+    )
+  })
 
   return(
     <View style={styles.vegeItem}>
+    {renderCategories}
       {/* <TouchableOpacity style={styles.imgTitle}>
         <Image
           style={styles.tinyImage}

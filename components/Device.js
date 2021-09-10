@@ -16,10 +16,8 @@ const styles = StyleSheet.create({
   imgTitle:{
     flexDirection: 'row',
   },
-  tinyImage: {
-    width: 40,
-    height: 40,
-    margin: 5,
+  device: {
+    backgroundColor: '#147332'
   },
 });
 

@@ -23,43 +23,31 @@ const Categories = ()=>{
 
   }, []);
 
-    const getCategories = async ()=>{
-    const response = await axios.get(categoriesURL);
-    const data = JSON.parse(response.request._response)
-    setCategoriesData(data);
-    console.log('\n\n categories35: ', categoriesData.categories[0].name)
-    console.log('\n\n categories35: ', categoriesData.categories[0])
-    // console.log('\n\n categories35: ', categories.categories[1].name)
-    // console.log('\n\n categories35: ', categories.categories[2].name)
-    // console.log('\n\n categories35: ', categories.categories[2].plants)
-    // console.log('\n\n categories35: ', categories.categories[2].plants[0].name)
-    // console.log('\n\n categories35: ', categories.categories[2].plants[1].name)
-    // console.log('\n\n categories35: ', categories.categories[2].plants[2].name)
-  }//getCategories
+  const getCategories = async ()=>{
+    try{
+      const response = await axios.get(categoriesURL)
+      .then((response)=>{
+        setCategoriesData(JSON.parse(response.request._response))
+      });
+      console.log('categoriesData: ', categoriesData)
+    }catch(error){
+      console.log('error in getCategories: ',error);
+      }
+  }//getCategories        
+  // console.log('\n\n categories35: ', categoriesData.categories[0].name);   
 
-  const renderCategories = categoriesData.categories.map((categoryName)=>{
+  const renderCategories = categoriesData.categories.map((categoryDetails)=>{
     return(
-      <Text>{categoryName.name}</Text>
+      <>
+        <Category categoryDetails={categoryDetails}/>
+      </>
     )
-  })
+  });
 
   return(
     <View style={styles.vegeItem}>
+    <Text>hi</Text>
     {renderCategories}
-      {/* <TouchableOpacity style={styles.imgTitle}>
-        <Image
-          style={styles.tinyImage}
-          source={{
-            uri: 'https://reactnative.dev/img/tiny_logo.png',
-          }}
-        />
-        <Text style={styles.vegeTitle}>{props.title}</Text>
-      </TouchableOpacity>
-      <View style={styles.quantityControls}>
-        <Text style={styles.quantityText}>{quantity}</Text>
-        <TouchableOpacity onPress={removeItems}><Text style={styles.controlsBtns}> - </Text></TouchableOpacity>
-        <TouchableOpacity onPress={addItems}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
-      </View> */}
     </View>
   )
 }

@@ -62,7 +62,7 @@ const App: () => React$Node = () => {
             <Device/>
             <Device/>
             <Categories/>
-            <Category/>
+            {/* <Category/> */}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -72,8 +72,9 @@ const App: () => React$Node = () => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    // backgroundColor: Colors.lighter,
     backgroundColor: 'green',
+    marginLeft: 1,
+    marginRight: 1,
   }, 
   body: {
     backgroundColor: 'white',

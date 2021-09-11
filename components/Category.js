@@ -9,7 +9,7 @@ const Category = (props)=>{
   	const [open, setOpen] = useState(false);
 
   console.log('Category props.categoryDetails.name:', props.categoryDetails.name);
-  // console.log('Category props.categoryDetails.name:', props.categoryDetails.plants);
+  console.log('Category props.categoryDetails.name:', props.categoryDetails.plants);
 
   return(    
     // <View style={styles.categoryItem}>
@@ -18,7 +18,17 @@ const Category = (props)=>{
     //   </TouchableOpacity>
     // </View>
     <List.AccordionGroup>
-      <List.Accordion title={props.categoryDetails.name} id={props.categoryDetails.id}>
+      {/* <List.Accordion title={props.categoryDetails.name} id={props.categoryDetails.id}>
+        <List.Item title="Item 1" />
+        {props.categoryDetails.plants !== null ? <>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List >
+              {props.categoryDetails.plants.map((plant)=>{<List.Item ket={plant.id} button ><ListItemText primary={plant.name} /></List.Item>})}
+            </List>
+          </Collapse>
+        </> :null}
+      </List.Accordion> */}
+      <List.Accordion title={props.categoryDetails.id} id={props.categoryDetails.id}>
         <List.Item title="Item 1" />
         {props.categoryDetails.plants !== null ? <>
           <Collapse in={open} timeout="auto" unmountOnExit>
@@ -28,6 +38,7 @@ const Category = (props)=>{
           </Collapse>
         </> :null}
       </List.Accordion>
+      <Text >vines</Text>
     </List.AccordionGroup>
   )
 }

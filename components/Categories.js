@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Category from './Category';
 
-
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,8 +13,6 @@ import {
 } from 'react-native';
 
 const categoriesURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/agwafarm.json';
-// const categoriesURL = 'https://api.themoviedb.org/3/movie/now_playing?api_key=b1bbf2914e46c6c6812473913d2635b4&language=en-US&page=1';
-
 
 const Categories = ()=>{
   const [categoriesData, setCategoriesData] = useState([]);
@@ -40,19 +37,6 @@ const Categories = ()=>{
 
   console.log('41 categoriesData: ', categoriesData);
   // console.log('42 categoriesData: ',typeof( categoriesData.categories));
-
-  // const displayCategoryPlants = (plants)=>{
-  //   console.log('\n id:', plants);
-  //   plants.map((plant)=>{
-  //     return(
-  //       <View>
-  //       <TouchableOpacity>
-  //         <Text key={plant.id}>{plant.name}</Text>
-  //       </TouchableOpacity>
-  //       </View>
-  //     );
-  //   });
-  // }//displayCategoryPlants
 
   // const renderCategories = categoriesData.categories.map((categoryDetails)=>{
   const renderCategories = categoriesData.map((categoryDetails)=>{

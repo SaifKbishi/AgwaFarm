@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { List,ListItemText  } from 'react-native-paper';
+import { List,ListItemText} from 'react-native-paper';
 import Collapse from "@material-ui/core/Collapse";
 
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import VegeItem from './VegeItem';
 
 const Category = (props)=>{
-  	const [open, setOpen] = useState(false);
+    const [expanded, setExpanded] = React.useState(true);
+    const handlePress = () => setExpanded(!expanded);
 
-  console.log('Category props.categoryDetails.name:', props.categoryDetails.name);
-  console.log('Category props.categoryDetails.name:', props.categoryDetails.plants);
+  // console.log('Category props.categoryDetails.name:', props.categoryDetails.name);
+  console.log('\n\n Category props.categoryDetails.plants:', props.categoryDetails.plants);
 
   return(    
     // <View style={styles.categoryItem}>
@@ -17,28 +18,10 @@ const Category = (props)=>{
     //     <Text style={styles.categoryTitle}>{props.categoryDetails.name}</Text>
     //   </TouchableOpacity>
     // </View>
-    <List.AccordionGroup>
-      {/* <List.Accordion title={props.categoryDetails.name} id={props.categoryDetails.id}>
-        <List.Item title="Item 1" />
-        {props.categoryDetails.plants !== null ? <>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List >
-              {props.categoryDetails.plants.map((plant)=>{<List.Item ket={plant.id} button ><ListItemText primary={plant.name} /></List.Item>})}
-            </List>
-          </Collapse>
-        </> :null}
-      </List.Accordion> */}
-      <List.Accordion title={props.categoryDetails.id} id={props.categoryDetails.id}>
-        <List.Item title="Item 1" />
-        {props.categoryDetails.plants !== null ? <>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List >
-              {props.categoryDetails.plants.map((plant)=>{<List.Item ket={plant.id} button ><ListItemText primary={plant.name} /></List.Item>})}
-            </List>
-          </Collapse>
-        </> :null}
+    <List.AccordionGroup> 
+      <List.Accordion title={props.categoryDetails.name} id={props.categoryDetails.id} expanded={expanded} onPress={handlePress}       >
+        {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<List.Item title={plant.name} style={styles.plantItem}/>)})}
       </List.Accordion>
-      <Text >vines</Text>
     </List.AccordionGroup>
   )
 }
@@ -55,6 +38,9 @@ const styles = StyleSheet.create({
  },
  categoryItem:{
    marginTop: 2,
+ },
+ plantItem:{
+   color: '#880000'
  },
 });
 

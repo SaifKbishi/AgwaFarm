@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 
 const VegeItem = (props)=>{
   const [quantity, setQuantity] = useState(0);
+  
   addItems = ()=>setQuantity(prevCount => prevCount + 1 );
   removeItems = ()=>{
     if(quantity > 0){

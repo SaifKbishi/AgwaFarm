@@ -20,7 +20,9 @@ const Category = (props)=>{
     // </View>
     <List.AccordionGroup> 
       <List.Accordion title={props.categoryDetails.name} id={props.categoryDetails.id} expanded={expanded} onPress={handlePress}       >
-        {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<List.Item title={plant.name} style={styles.plantItem}/>)})}
+        {/* {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<List.Item title={plant.name} style={styles.plantItem}/>)})} */}
+        {/* {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<VegeItem  title={plant.name} style={styles.plantItem}/>)})} */}
+        {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<VegeItem plant={plant} style={styles.plantItem}/>)})}
       </List.Accordion>
     </List.AccordionGroup>
   )

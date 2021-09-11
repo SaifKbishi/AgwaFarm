@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 
 const VegeItem = (props)=>{
   const [quantity, setQuantity] = useState(0);
-  
+
   addItems = ()=>setQuantity(prevCount => prevCount + 1 );
   removeItems = ()=>{
     if(quantity > 0){
@@ -12,17 +12,20 @@ const VegeItem = (props)=>{
       setQuantity(0);
     }    
   }
+  const fetchPlantDetails =(id)=>{
+    console.log('id:', id)
+  }//fetchPlantDetails
+
 
   return(
     <View style={styles.vegeItem}>
-      <TouchableOpacity style={styles.imgTitle}>
-        <Image
-          style={styles.tinyImage}
-          source={{
+      <TouchableOpacity style={styles.imgTitle} onPress={()=>fetchPlantDetails(props.plant.id)}>
+        <Image style={styles.tinyImage} source={{
             uri: 'https://reactnative.dev/img/tiny_logo.png',
+            // uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${props.imageId}@3x.jpg`,
           }}
         />
-        <Text style={styles.vegeTitle}>{props.title}</Text>
+        <Text style={styles.vegeTitle}>{props.plant.name}</Text>
       </TouchableOpacity>
       <View style={styles.quantityControls}>
         <Text style={styles.quantityText}>{quantity}</Text>
@@ -39,11 +42,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   quantityText:{
-    fontSize: 30,
+    fontSize: 20,
     borderStyle: 'solid',
     borderWidth: 2,
-    paddingVertical: 2,
-    paddingHorizontal: 20,
+     borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
   },
   controlsBtns:{
     fontSize: 30,
@@ -53,14 +57,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#E3E9F3',
     borderRadius: 10,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    margin:1,
   },
   imgTitle:{
     width:'65%',
     flexDirection: 'row',
   },
   vegeTitle:{
-    fontSize: 25,
+    fontSize: 15,
+    paddingVertical: 10,
   },
   tinyImage: {
     width: 40,

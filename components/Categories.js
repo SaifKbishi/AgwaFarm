@@ -54,8 +54,7 @@ const Categories = ()=>{
 
 
   return(
-    <View style={styles.vegeItem}>
-    <Text>hi</Text>
+    <View style={styles.vegeItem}>    
       {/* <Category /> */}
       {renderCategories}
       {/* {categoriesData.categories && categoriesData.categories.map((categoryDetails)=>{

@@ -27,7 +27,7 @@ const Categories = ()=>{
     try{
       const response = await axios.get(categoriesURL)      
       .then((response)=>{
-        console.log('33 ',JSON.parse(response.request._response))
+        // console.log('33 ',JSON.parse(response.request._response))
         setCategoriesData(JSON.parse(response.request._response).categories)
       });
     }catch(error){
@@ -35,7 +35,7 @@ const Categories = ()=>{
       }
   }//getCategories
 
-  console.log('41 categoriesData: ', categoriesData);
+  // console.log('41 categoriesData: ', categoriesData);
   // console.log('42 categoriesData: ',typeof( categoriesData.categories));
 
   // const renderCategories = categoriesData.categories.map((categoryDetails)=>{

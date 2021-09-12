@@ -10,7 +10,7 @@ const Category = (props)=>{
     const handlePress = () => setExpanded(!expanded);
 
   // console.log('Category props.categoryDetails.name:', props.categoryDetails.name);
-  console.log('\n\n Category props.categoryDetails.plants:', props.categoryDetails.plants);
+  // console.log('\n\n Category props.categoryDetails.plants:', props.categoryDetails.plants);
 
   return(    
     // <View style={styles.categoryItem}>

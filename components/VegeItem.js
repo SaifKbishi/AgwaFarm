@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+
+const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
 
 const VegeItem = (props)=>{
   const [quantity, setQuantity] = useState(0);
-
+  const [plantsData, setPlantsData] = useState([]);
   addItems = ()=>setQuantity(prevCount => prevCount + 1 );
   removeItems = ()=>{
     if(quantity > 0){
@@ -12,10 +15,23 @@ const VegeItem = (props)=>{
       setQuantity(0);
     }    
   }
-  const fetchPlantDetails =(id)=>{
-    console.log('id:', id)
-  }//fetchPlantDetails
+  
 
+  const fetchPlantDetails = async (id)=>{
+    console.log('id:', id);
+    try{
+      const response = await axios.get(plantsURL)
+      .then((response)=>{
+        // console.log('\n\n 35 plants111: ',response.request._response)
+        // console.log('\n\n 35 plants111:typeof ',typeof(response.request._response))
+        // setPlantsData(JSON.parse(response.request._response).plants);
+        setPlantsData(response.data.plants);
+      });
+    }catch(error){console.log('Error fetching plant details: ', error)}
+  }//fetchPlantDetails
+  console.log('\n 30 plantsData:', plantsData)
+  console.log('\n\n\n 31 plantsData:', plantsData)
+  // console.log('29 plantsData:', plantsData.plants[0].name)
 
   return(
     <View style={styles.vegeItem}>

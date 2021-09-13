@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
-import Modal from '@material-ui/core/Modal';
+import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
 
 const VegeDetails = (props)=>{
  console.log('VegeDetails props', props);

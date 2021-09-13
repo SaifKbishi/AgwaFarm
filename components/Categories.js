@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Category from './Category';
+import { Portal, Provider } from 'react-native-paper';
 
 import {
   SafeAreaView,
@@ -48,9 +49,9 @@ const Categories = ()=>{
 
   const renderCategories = categoriesData.map((categoryDetails)=>{
     return(
-      <>
-        <Category categoryDetails={categoryDetails} plantsData={plantsData} key={categoryDetails.id}/>
-      </> 
+      <Provider>
+        <Category categoryDetails={categoryDetails} plantsData={plantsData} key={categoryDetails.id}/>   
+      </Provider>
     )
   });
 

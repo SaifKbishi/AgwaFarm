@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
-// import VegeDetails from './VegeDetails';
+import VegeDetails from './VegeDetails';
 import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
 
 const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
-const allPlantsArray =[];
-
-function VegeDetails(props){
-  const {open, onClose, plantDetails} = props;  
-  const handleClose = (value)=>{
-    setOpen(false);    
-  }
-  return(
-
-  )
-}//VegeDetails
 
 const VegeItem = (props)=>{
   // console.log('props: ', props);
@@ -46,13 +35,12 @@ const VegeItem = (props)=>{
         setPlantsData(response.data.plants);               
       });
     }catch(error){console.log('Error fetching plant details: ', error)}
-  }//fetchPlantDetails
-  
+  }//fetchPlantDetails  
   const displayPlantDetails = (id)=>{
-    setOpen(true);
     const plant = plantsData.filter(pl => pl.id===id);
     setPlantDetails(plant[0]);
     openPlantDetailsDialog(plant[0]);
+    showDialog();
   }//displayPlantDetails  
   const openPlantDetailsDialog = (plant)=>{
     console.log('name', plant.name)
@@ -60,7 +48,7 @@ const VegeItem = (props)=>{
     return (
       <>
         {/* <Text style={styles.vegeTitle}>{plant.name}</Text> */}
-        {/* <VegeDetails plant={plant} />       */}
+        <VegeDetails plant={plant} />
       </>
     );
   }
@@ -86,12 +74,19 @@ const VegeItem = (props)=>{
     )
   })
 
+  const [visible, setVisible] = React.useState(false);
+
+  const showDialog = () => setVisible(true);
+
+  const hideDialog = () => setVisible(false);
+
   return(
     // <View style={styles.vegeItem}>
     //   {renderCatePlants}
     // </View>
-    <>
+    
     <View style={styles.vegeItem}>
+   
       <TouchableOpacity style={styles.imgTitle} onPress={()=>displayPlantDetails(props.plant.id)}>
         <Image style={styles.tinyImage} source={{
             uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${props.plant.id}@3x.jpg`,            
@@ -104,14 +99,19 @@ const VegeItem = (props)=>{
         <TouchableOpacity onPress={removeItems}><Text style={styles.controlsBtns}> - </Text></TouchableOpacity>
         <TouchableOpacity onPress={addItems}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
       </View>
-
+        <Portal>
+          <Dialog visible={visible} onDismiss={hideDialog} >
+            <Dialog.Title>Allan</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>This is simple dialog</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={hideDialog}>Done</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
     </View>
-      <VegeDetails
-        open={open}
-        onClose={handleClose}
-        // plantDetails={plantDetails}
-      />
-    </>
+    
   )
 }
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { List,ListItemText} from 'react-native-paper';
 import Collapse from "@material-ui/core/Collapse";
+import { Portal, Provider } from 'react-native-paper';
 
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import VegeItem from './VegeItem';
@@ -11,8 +12,11 @@ const Category = (props)=>{
     const handlePress = () => setExpanded(!expanded);
  
   return(
+    
     <List.AccordionGroup> 
+    
       <List.Accordion title={props.categoryDetails.name} id={props.categoryDetails.id} expanded={expanded} onPress={handlePress}       >
+      {/* <Portal> */}
         {/* {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<List.Item title={plant.name} style={styles.plantItem}/>)})} */}
         {/* {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<VegeItem  title={plant.name} style={styles.plantItem}/>)})} */}
         
@@ -22,8 +26,11 @@ const Category = (props)=>{
         {/* {props.plantsData && props.plantsData.map((plant)=>{
           return(<VegeItem plant={plant} style={styles.plantItem}/>)
           })} */}
+            {/* </Portal> */}
       </List.Accordion>
+     
     </List.AccordionGroup>
+   
   )
 }
 

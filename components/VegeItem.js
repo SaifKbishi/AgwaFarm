@@ -1,44 +1,100 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+// import VegeDetails from './VegeDetails';
+import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
 
 const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
+const allPlantsArray =[];
+
+function VegeDetails(props){
+  const {open, onClose, plantDetails} = props;  
+  const handleClose = (value)=>{
+    setOpen(false);    
+  }
+  return(
+
+  )
+}//VegeDetails
 
 const VegeItem = (props)=>{
+  // console.log('props: ', props);
   const [quantity, setQuantity] = useState(0);
-  const [plantsData, setPlantsData] = useState([]);
-  addItems = ()=>setQuantity(prevCount => prevCount + 1 );
-  removeItems = ()=>{
+  const [plantsData, setPlantsData] = useState([]);  
+  const [plantDetails, setPlantDetails] = useState();
+
+  const addItems = ()=>setQuantity(prevCount => prevCount + 1 );
+  const removeItems = ()=>{
     if(quantity > 0){
       setQuantity(prevCount => prevCount - 1 );
     }else{
       setQuantity(0);
     }    
   }
-  
+  useEffect(()=>{
+     let source = axios.CancelToken.source();
+    fetchPlantsData();
+    return () => {
+      source.cancel('Cancelling in cleanup');
+    }
+  },[]);
 
-  const fetchPlantDetails = async (id)=>{
-    console.log('id:', id);
+  const fetchPlantsData = async ()=>{
     try{
       const response = await axios.get(plantsURL)
       .then((response)=>{
-        // console.log('\n\n 35 plants111: ',response.request._response)
-        // console.log('\n\n 35 plants111:typeof ',typeof(response.request._response))
-        // setPlantsData(JSON.parse(response.request._response).plants);
-        setPlantsData(response.data.plants);
+        setPlantsData(response.data.plants);               
       });
     }catch(error){console.log('Error fetching plant details: ', error)}
   }//fetchPlantDetails
-  console.log('\n 30 plantsData:', plantsData)
-  console.log('\n\n\n 31 plantsData:', plantsData)
-  // console.log('29 plantsData:', plantsData.plants[0].name)
+  
+  const displayPlantDetails = (id)=>{
+    setOpen(true);
+    const plant = plantsData.filter(pl => pl.id===id);
+    setPlantDetails(plant[0]);
+    openPlantDetailsDialog(plant[0]);
+  }//displayPlantDetails  
+  const openPlantDetailsDialog = (plant)=>{
+    console.log('name', plant.name)
+    // alert('name: '+plant.name+'\nlifeCycle: '+plant.lifeCycle+'\nimageId: '+ plant.imageId);
+    return (
+      <>
+        {/* <Text style={styles.vegeTitle}>{plant.name}</Text> */}
+        {/* <VegeDetails plant={plant} />       */}
+      </>
+    );
+  }
+  const renderCatePlants = plantsData.map((plantDetails)=>{
+    const plant =plantsData.filter(pl => pl.id===plantDetails.id);
+    // console.log(plant[0].id,':::::',plantDetails.id, 'image:', plant[0].imageId);
+    return(
+      <View style={styles.vegeItem}>
+        <TouchableOpacity style={styles.imgTitle} onPress={()=>displayPlantDetails(props.plant.id)}>
+          <Image style={styles.tinyImage} source={{
+              // uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.imageId}@3x.jpg`,            
+              uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.imageId}@3x.jpg`,            
+            }}
+          />
+          <Text style={styles.vegeTitle}>{props.plant.name}</Text>
+        </TouchableOpacity>
+        <View style={styles.quantityControls}>
+          <Text style={styles.quantityText}>{quantity}</Text>
+          <TouchableOpacity onPress={removeItems}><Text style={styles.controlsBtns}> - </Text></TouchableOpacity>
+          <TouchableOpacity onPress={addItems}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
+        </View>
+      </View>
+    )
+  })
 
   return(
+    // <View style={styles.vegeItem}>
+    //   {renderCatePlants}
+    // </View>
+    <>
     <View style={styles.vegeItem}>
-      <TouchableOpacity style={styles.imgTitle} onPress={()=>fetchPlantDetails(props.plant.id)}>
+      <TouchableOpacity style={styles.imgTitle} onPress={()=>displayPlantDetails(props.plant.id)}>
         <Image style={styles.tinyImage} source={{
-            uri: 'https://reactnative.dev/img/tiny_logo.png',
-            // uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${props.imageId}@3x.jpg`,
+            uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${props.plant.id}@3x.jpg`,            
           }}
         />
         <Text style={styles.vegeTitle}>{props.plant.name}</Text>
@@ -48,7 +104,14 @@ const VegeItem = (props)=>{
         <TouchableOpacity onPress={removeItems}><Text style={styles.controlsBtns}> - </Text></TouchableOpacity>
         <TouchableOpacity onPress={addItems}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
       </View>
+
     </View>
+      <VegeDetails
+        open={open}
+        onClose={handleClose}
+        // plantDetails={plantDetails}
+      />
+    </>
   )
 }
 

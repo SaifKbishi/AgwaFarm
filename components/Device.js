@@ -6,19 +6,19 @@ const deviceURL = './files/devices.js'
 console.log('\n\n\n Hello from Device')
 const Device = ()=>{
   useEffect(()=>{
-    getDevices();
+    // getDevices();
   },[]);
 
-  const getDevices = async ()=>{
-    try {
-      const response = await axios.get(deviceURL)
-      .then((response)=>{
-        console.log('\n\n response: ', response)
-      })
-    } catch (error) {
-      console.log('error fetching devices: ', error)
-    }
-  }//getDevices
+  // const getDevices = async ()=>{
+  //   try {
+  //     const response = await axios.get(deviceURL)
+  //     .then((response)=>{
+  //       console.log('\n\n response: ', response)
+  //     })
+  //   } catch (error) {
+  //     console.log('error fetching devices: ', error)
+  //   }
+  // }//getDevices
 
   return(
     <View style={styles.device}>

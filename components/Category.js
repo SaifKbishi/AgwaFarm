@@ -6,23 +6,22 @@ import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import VegeItem from './VegeItem';
 
 const Category = (props)=>{
+  // console.log('9 ',props.plantsData)
     const [expanded, setExpanded] = React.useState(true);
     const handlePress = () => setExpanded(!expanded);
-
-  // console.log('Category props.categoryDetails.name:', props.categoryDetails.name);
-  // console.log('\n\n Category props.categoryDetails.plants:', props.categoryDetails.plants);
-
-  return(    
-    // <View style={styles.categoryItem}>
-    //   <TouchableOpacity  style={styles.cateName} key={props.categoryDetails.id} >
-    //     <Text style={styles.categoryTitle}>{props.categoryDetails.name}</Text>
-    //   </TouchableOpacity>
-    // </View>
+ 
+  return(
     <List.AccordionGroup> 
       <List.Accordion title={props.categoryDetails.name} id={props.categoryDetails.id} expanded={expanded} onPress={handlePress}       >
         {/* {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<List.Item title={plant.name} style={styles.plantItem}/>)})} */}
         {/* {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<VegeItem  title={plant.name} style={styles.plantItem}/>)})} */}
-        {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<VegeItem plant={plant} style={styles.plantItem}/>)})}
+        
+        {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{
+          return(<VegeItem plant={plant} style={styles.plantItem}/>)
+          })}
+        {/* {props.plantsData && props.plantsData.map((plant)=>{
+          return(<VegeItem plant={plant} style={styles.plantItem}/>)
+          })} */}
       </List.Accordion>
     </List.AccordionGroup>
   )

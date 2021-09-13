@@ -24,10 +24,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {
-  // Header,
-  // Colors,
-} from 'react-native/Libraries/NewAppScreen';
+// import {
+//   // Header,
+//   // Colors,
+// } from 'react-native/Libraries/NewAppScreen';
 
 const categoriesURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/agwafarm.json';
 const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
@@ -40,15 +40,11 @@ const App: () => React$Node = () => {
 
   useEffect(() => {
     getCategories();
-    // return () => {
-    //   cleanup
-    // }
   }, [])
 
   const getCategories = async ()=>{
     const categories = await axios.get(categoriesURL);
     setCategories(categories);
-    // console.log('categories', categories)
   }//getCategories
 
   return (
@@ -62,7 +58,6 @@ const App: () => React$Node = () => {
             <Device/>
             <Device/>
             <Categories/>
-            {/* <Category/> */}
           </View>
         </ScrollView>
       </SafeAreaView>

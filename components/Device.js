@@ -1,41 +1,61 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import users from '../files/users';
 
-const deviceURL = './files/devices.js'
 console.log('\n\n\n Hello from Device')
 const Device = ()=>{
-  useEffect(()=>{
-    // getDevices();
-  },[]);
+  const [devices , setDevices] =useState([]);  
 
-  // const getDevices = async ()=>{
-  //   try {
-  //     const response = await axios.get(deviceURL)
-  //     .then((response)=>{
-  //       console.log('\n\n response: ', response)
-  //     })
-  //   } catch (error) {
-  //     console.log('error fetching devices: ', error)
-  //   }
-  // }//getDevices
+  useEffect(()=>{
+    fetchDevices();
+    // getDevices();
+  },[devices]);
+
+  const fetchDevices = ()=>{
+    try{
+       setDevices(users.devices);
+    }catch(error){
+      console.log('could not fethc devices')
+    }    
+  }//fetchDevices
+
+  const renderDevices =  devices.map((device)=>{
+    return(
+      <TouchableOpacity style={styles.device} key={device.id}> 
+        <Text style={styles.deviceTitle}>{device.deviceName}</Text>
+      </TouchableOpacity>   
+    )
+  });
 
   return(
-    <View style={styles.device}>
-      <TouchableOpacity style={styles.imgTitle}> 
-        <Text >device</Text>
-      </TouchableOpacity>      
+    <View style={styles.allDevice}>
+      {renderDevices}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  imgTitle:{
+  allDevice:{
+    backgroundColor: '#147332',
+    display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'flex-start',
+    height: 70,
+    borderRadius:5,
+  },
+  deviceTitle:{
+    color: '#000',
+    backgroundColor: '#27AE60',
+    margin: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    borderRadius: 10,
   },
   device: {
-    backgroundColor: '#147332'
+    color: '#000',
   },
+
 });
 
 export default Device;

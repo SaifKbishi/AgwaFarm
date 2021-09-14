@@ -53,9 +53,7 @@ const App: () => React$Node = () => {
       <SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
           <View style={styles.body}>
-            <Header/>
-            <Text >Devices here</Text>
-            <Device/>
+            <Header/>            
             <Device/>
             <Categories/>
           </View>

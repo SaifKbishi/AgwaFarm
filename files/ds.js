@@ -27,7 +27,7 @@ async function getCategories(){
         });
       });
     });
-    // console.log(categoriesData)
+    console.log(categoriesData)
   }catch(error){
       console.log('\n error in getCategories: ',error);
       }
@@ -56,7 +56,6 @@ async function getPlants(){
       // console.log('66: ',plantsData.plantDescription)
       printPlants(plantsData);
     });
-    // console.log(plantsData)
   }catch(error){console.log('\n error fetching plants=>', error)}
 }//getPlants
 

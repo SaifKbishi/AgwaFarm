@@ -5,7 +5,8 @@ import users from '../files/users';
 
 console.log('\n\n\n Hello from Device')
 const Device = ()=>{
-  const [devices , setDevices] =useState([]);  
+  const [devices , setDevices] =useState([]);
+  const [selectedDevice, setslectedDevice] = useState();
 
   useEffect(()=>{
     fetchDevices();
@@ -22,7 +23,7 @@ const Device = ()=>{
 
   const renderDevices =  devices.map((device)=>{
     return(
-      <TouchableOpacity style={styles.device} key={device.id}> 
+      <TouchableOpacity style={styles.device} key={device.id} >
         <Text style={styles.deviceTitle}>{device.deviceName}</Text>
       </TouchableOpacity>   
     )

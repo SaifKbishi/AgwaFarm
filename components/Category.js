@@ -7,30 +7,27 @@ import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import VegeItem from './VegeItem';
 
 const Category = (props)=>{
-  // console.log('9 ',props.plantsData)
-    const [expanded, setExpanded] = React.useState(true);
-    const handlePress = () => setExpanded(!expanded);
- 
-  return(
-    
-    <List.AccordionGroup> 
-    
-      <List.Accordion title={props.categoryDetails.name} id={props.categoryDetails.id} expanded={expanded} onPress={handlePress}       >
-      {/* <Portal> */}
-        {/* {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<List.Item title={plant.name} style={styles.plantItem}/>)})} */}
-        {/* {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{return(<VegeItem  title={plant.name} style={styles.plantItem}/>)})} */}
-        
-        {props.categoryDetails.plants && props.categoryDetails.plants.map((plant)=>{
-          return(<VegeItem plant={plant} style={styles.plantItem}/>)
-          })}
-        {/* {props.plantsData && props.plantsData.map((plant)=>{
-          return(<VegeItem plant={plant} style={styles.plantItem}/>)
-          })} */}
-            {/* </Portal> */}
+  const [expanded, setExpanded] = React.useState(true);
+  const handlePress = () => setExpanded(!expanded);
+  // console.log('\n13 rawCategory: ',props.categoryDetails)
+  // console.log('\n14',props.categoryDetails[1].name)
+  console.log('\n15 fullPlantData: ', props.fullPlantData);
+
+  const renderCategories = props.categoryDetails.map((cate)=>{
+    return(
+      <List.AccordionGroup id={cate.id} style={styles.AccordionGroup}>
+      <List.Accordion title={cate.name} id={cate.id} expanded={expanded} onPress={handlePress}>
+        {/* <Text style={styles.quantityText}>55f sfsd5</Text>  */}
+        <VegeItem category={cate.id} fullPlantData={props.fullPlantData}/>      
       </List.Accordion>
-     
-    </List.AccordionGroup>
-   
+      </List.AccordionGroup>  
+    );
+  });
+  
+  return(    
+    <>    
+      {renderCategories}      
+     </>
   )
 }
 
@@ -50,6 +47,9 @@ const styles = StyleSheet.create({
  plantItem:{
    color: '#880000'
  },
+ AccordionGroup:{
+   height:800,
+ }
 });
 
 export default Category;

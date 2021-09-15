@@ -7,7 +7,7 @@ import VegeDetails from './VegeDetails';
 
 const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
 
-const VegeItem = (props)=>{
+const VegeItem2 = (props)=>{
   // console.log('props: ', props.category);
   // console.log(props.fullPlantData)
   const [quantity, setQuantity] = useState(0);
@@ -16,7 +16,10 @@ const VegeItem = (props)=>{
   const [idForDialog, setIdForDialog] = useState('');
 
   const [visible, setVisible] = React.useState(false);
-  const showDialog = () => setVisible(true); 
+  const showDialog = () => setVisible(true);
+  const showDialog2 = () => {
+    this.setVisible(true);
+  }
   const hideDialog = () => setVisible(false);
   const plants =[];
   const addItems = ()=>setQuantity(prevCount => prevCount + 1 );
@@ -62,12 +65,11 @@ const VegeItem = (props)=>{
       {/* {plants} */}
       {props.fullPlantData.filter(plantDetails1=>
         plantDetails1.categoryId === props.category).map(plantDetails=>{
-          console.log('65 plantDetails', plantDetails)
+          console.log('65 plantDetails',plantDetails)
           // return(<View><Text>{plantDetails.plantName}</Text></View>)
           return(
         <View style={styles.vegeItem} key={plantDetails.plantId}>
-          <TouchableOpacity style={styles.imgTitle} onPress={()=>displayPlantDetails(plantDetails.plantId)}>
-          {/* <TouchableOpacity style={styles.imgTitle} onPress={()=>showDialog()}> */}
+          <TouchableOpacity style={styles.imgTitle} onPress={()=>showDialog()}>
             <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.plantImageId}@3x.jpg`,}}/>
             <Text style={styles.vegeTitle}>{plantDetails.plantName}</Text>
           </TouchableOpacity>
@@ -141,10 +143,8 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 2,
     borderRadius: 10,
-    paddingTop:5,
+    paddingVertical: 8,
     paddingHorizontal: 15,
-    borderColor: '#47AB48',
-    marginVertical: 3,
   },
   controlsBtns:{
     fontSize: 30,
@@ -170,9 +170,7 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 5,
     borderRadius: 5,
-    borderColor: '#47AB48',
-    borderWidth: 1,
   },
 });
 
-export default VegeItem;
+export default VegeItem2;

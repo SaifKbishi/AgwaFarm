@@ -31,7 +31,7 @@ const Category = (props)=>{
           return(
             <List.AccordionGroup id={cate.id} style={styles.AccordionGroup}>
             <List.Accordion title={cate.name} id={cate.id} expanded={expanded} onPress={handlePress}>
-              <VegeItem category={cate.id} fullPlantData={props.fullPlantData}/>      
+              <VegeItem category={cate.id} fullPlantData={props.fullPlantData}/>
             </List.Accordion>
             </List.AccordionGroup>  
           );

@@ -30,20 +30,18 @@ const Categories = ()=>{
     let source = axios.CancelToken.source();    
     getCategories();
     getPlants();
-    addCategoryDetailsToPlantObj(); 
+    addCategoryDetailsToPlantObj();  
     // console.log('\n\n\n\n rawCategory from Categories:\n',rawCategory);
-    console.log('\n\n\n\n36 categoriesData from Categories:\n',categoriesData);    
-    console.log('\n\n\n\n36_2 plantsData from Categories:\n',plantsData); 
+    // console.log('\n\n\n\n36 categoriesData from Categories:\n',categoriesData);    
+    // console.log('\n\n\n\n36_2 plantsData from Categories:\n',plantsData);   
     return () => {
-      source.cancel('Cancelling in cleanup'); 
+      source.cancel('Cancelling in cleanup');  
     }
   }, []);
  
   const getCategories = async () =>{
     try{
       const cateResponse = await axios.get(categoriesURL)
-      // console.log('46  cateResponse: ', cateResponse);
-      // .then((cateResponse)=>{ 
         let cateData = cateResponse.data.categories;
         setRawCategory(cateData);
         cateData.forEach(cateItem => {
@@ -53,7 +51,7 @@ const Categories = ()=>{
               categoryName: cateItem.name,
               plantId: plant.id,
               plantName: plant.name,
-            }
+            } 
             categoriesDataArray.push(cateObj);
           });
         });
@@ -89,7 +87,7 @@ const Categories = ()=>{
     }catch(error){console.log('\n error fetching Plants', error)}
   }//getPlants
     
-  const addCategoryDetailsToPlantObj = ()=>{
+  const addCategoryDetailsToPlantObj = async ()=>{
     if(plantsData.length > 0 && categoriesData.length >0){
     fullPlantData = plantsData.map(plant =>{
         let plantInCate = categoriesData.find(pIC => pIC.plantId === plant.plantId);
@@ -101,9 +99,9 @@ const Categories = ()=>{
 
   return(
     <View style={styles.vegeItem}>
-      <Provider>
+      {/* <Provider> */}
         <Category categoryDetails={rawCategory} fullPlantData={fullPlantData} />
-      </Provider>
+      {/* </Provider> */}
     </View>    
   )
 }

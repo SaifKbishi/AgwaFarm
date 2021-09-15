@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
-import VegeDetails from './VegeDetails';
 import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
+import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import { List,ListItemText} from 'react-native-paper';
+import axios from 'axios';
+import VegeDetails from './VegeDetails';
 
 const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
 
 const VegeItem = (props)=>{
   // console.log('props: ', props.category);
-  console.log(props.fullPlantData)
+  // console.log(props.fullPlantData)
   const [quantity, setQuantity] = useState(0);
   const [plantsData, setPlantsData] = useState([]);  
   const [plantDetails, setPlantDetails] = useState();
@@ -55,13 +55,10 @@ const VegeItem = (props)=>{
     );
   }
 
-  // const renderCatePlants =()=>{
-    
     props.fullPlantData.forEach((plantDetails)=>{    
     if(plantDetails.categoryId === props.category) {
       // console.log(plantDetails.plantName)
-      plants.push(      
-        // <View><Text style={styles.vegeTitle}>jdjdjdslkand</Text></View> 
+      plants.push(
         <View style={styles.vegeItem}>
           <TouchableOpacity style={styles.imgTitle} onPress={()=>displayPlantDetails(plantDetails.plantId)}>
             <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.plantImageId}@3x.jpg`,}}/>
@@ -81,33 +78,54 @@ const VegeItem = (props)=>{
                 <Paragraph><Text style={styles.dialogText}>Description: </Text>{plantDetails.plantDescription}</Paragraph>
                 <Paragraph><Text style={styles.dialogText}>Seed To Crop: </Text>{plantDetails.plantSeedToCrop}</Paragraph>
                 <Paragraph><Text style={styles.dialogText}>Yield: </Text>{plantDetails.plantYield}</Paragraph>
-                {/* <Paragraph><Text style={styles.dialogText}>Nutrition facts: </Text>{plantDetails.plantNutritionFacts}</Paragraph> */}
+                <Paragraph><Text style={styles.dialogText}>Nutrition facts: </Text></Paragraph>
+                <List.AccordionGroup>
+                {plantDetails.plantNutritionFacts.map((ntf)=>{
+                  return(
+                  <List.Accordion title={ntf.key} id={ntf.key}>
+                  <List.Item title="Nutrient value: " description={ntf.nutrientValue} style={styles.ntfTitle}/>
+                  <List.Item title="% Of RDA: " description={ntf.percentageOfRDA} style={styles.ntfTitle}/>
+                  </List.Accordion>  
+                  )
+                })}
+                </List.AccordionGroup>
               </Dialog.Content>
               <Dialog.Actions>
                 <Button onPress={hideDialog}>Done</Button>
               </Dialog.Actions>
             </Dialog>
           </Portal>
-        </View>      
+        </View>    
       )}
     })
-  // }
-//  console.log('33',plants);
+
   return(
-    <View style={styles.vegeItem}>
+    <>
       {/* {renderCatePlants} */}
       {plants}
-    </View>    
+    </>    
   )
 }
-
 const styles = StyleSheet.create({
+  ntfText:{
+    fontSize: 15,
+    justifyContent: "flex-start",
+    alignItems:'flex-start',
+  },
+  ntfTitle:{
+    fontSize: 15,
+    height:50,
+    justifyContent: "flex-start",
+    alignItems:'flex-start',
+    backgroundColor:'#F0FFF6',
+  },
   dialogText:{
     fontSize: 15,
     fontWeight: 'bold'
   },
   dialog:{
-    height:600,
+    top:15,
+    flex: 1,
   },
   quantityControls:{
     flexDirection: 'row',

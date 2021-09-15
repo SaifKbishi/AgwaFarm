@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
 
 const VegeDetails = (props)=>{
-console.log('9 plantId', props.plant)
+// console.log('9 plantId', props.plant)
 // console.log('10 plantsData', props.plantsData)
 
 

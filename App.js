@@ -12,6 +12,7 @@ import Category from './components/Category';
 import VegeItem from './components/VegeItem';
 import Header from './components/Header';
 import Device from './components/Device';
+import { Portal, Provider } from 'react-native-paper';
 
 
 import {
@@ -49,8 +50,9 @@ const App: () => React$Node = () => {
 
   return (
     <>
+     <Provider>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
         <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
           <View style={styles.body}>
             <Header/>            
@@ -59,15 +61,21 @@ const App: () => React$Node = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
+       </Provider>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  },
   scrollView: {
     backgroundColor: 'green',
     marginLeft: 1,
     marginRight: 1,
+    flex: 1,
   }, 
   body: {
     backgroundColor: 'white',

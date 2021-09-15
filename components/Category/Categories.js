@@ -2,16 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Category from './Category';
 import { Portal, Provider } from 'react-native-paper';
-
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-} from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TouchableOpacity,} from 'react-native';
 
 const categoriesURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/agwafarm.json';
 const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';

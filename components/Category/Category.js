@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { List,ListItemText} from 'react-native-paper';
-import Collapse from "@material-ui/core/Collapse";
 import { Portal, Provider } from 'react-native-paper';
 
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
-import VegeItem from './VegeItem';
+import VegeItem from '../VegeItem';
 
 const Category = (props)=>{
   const [expanded, setExpanded] = React.useState(true);

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import users from '../files/users';
 
-console.log('\n\n\n Hello from Device')
+console.log('\nHello from Device\n')
 const Device = ()=>{
   const [devices , setDevices] =useState([]);
   const [selectedDevice, setslectedDevice] = useState();
@@ -21,9 +21,13 @@ const Device = ()=>{
     }    
   }//fetchDevices
 
+  const deviceSelected =(deviceName)=>{
+    console.log('selected device: ', deviceName)
+  }
+
   const renderDevices =  devices.map((device)=>{
     return(
-      <TouchableOpacity style={styles.device} key={device.id} >
+      <TouchableOpacity style={styles.device} key={device.id} onPress={()=>deviceSelected(device.deviceName)}>
         <Text style={styles.deviceTitle}>{device.deviceName}</Text>
       </TouchableOpacity>   
     )

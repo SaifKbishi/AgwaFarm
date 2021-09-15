@@ -3,6 +3,7 @@ import axios from 'axios';
 import Category from './Category';
 import { Portal, Provider } from 'react-native-paper';
 import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TouchableOpacity,} from 'react-native';
+import DAL from '../../DAL/DAL'
 
 const categoriesURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/agwafarm.json';
 const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
@@ -16,9 +17,9 @@ const Categories = ()=>{
   const [rawCategory, setRawCategory] = useState([]);
 
   console.log('hello from Categories');
-
+ 
   useEffect(() => {
-    let source = axios.CancelToken.source();    
+    let source = axios.CancelToken.source();      
     getCategories();
     getPlants();
     addCategoryDetailsToPlantObj();  
@@ -26,13 +27,14 @@ const Categories = ()=>{
     // console.log('\n\n\n\n36 categoriesData from Categories:\n',categoriesData);    
     // console.log('\n\n\n\n36_2 plantsData from Categories:\n',plantsData);   
     return () => { 
-      source.cancel('Cancelling in cleanup');
-    }
+      source.cancel('Cancelling in cleanup'); 
+    } 
   }, []);
  
   const getCategories = async () =>{
     try{
       const cateResponse = await axios.get(categoriesURL)
+      // const cateResponse = getCategories2();
         let cateData = cateResponse.data.categories;
         setRawCategory(cateData);
         cateData.forEach(cateItem => {
@@ -44,19 +46,19 @@ const Categories = ()=>{
               plantName: plant.name,
             } 
             categoriesDataArray.push(cateObj);
-          });
+          });   
         });
-        setCategoriesData(categoriesDataArray);
+        setCategoriesData(categoriesDataArray);  
       // });
-    }catch(error){      
-      console.log('\n error in getCategories: ',error);
+    }catch(error){  
+      console.log('\n error in getCategories: ',error);   
       }
   }//getCategories
 
   const getPlants = async () =>{
     try{
       const plantsResponse = await axios.get(plantsURL)
-      .then((plantsResponse)=>{
+      // const plantsResponse = DAL.getPlants2();
         let plantsData = plantsResponse.data.plants;
         plantsData.forEach(plantItem => {
           let plantObj ={
@@ -73,8 +75,6 @@ const Categories = ()=>{
           plantsDataArray.push(plantObj);
         });
         setPlantsData(plantsDataArray);
-        // setPlantsData(response.data.plants);
-      });
     }catch(error){console.log('\n error fetching Plants', error)}
   }//getPlants
     
@@ -90,9 +90,7 @@ const Categories = ()=>{
 
   return(
     <View style={styles.vegeItem}>
-      {/* <Provider> */}
         <Category categoryDetails={rawCategory} fullPlantData={fullPlantData} />
-      {/* </Provider> */}
     </View>    
   )
 }

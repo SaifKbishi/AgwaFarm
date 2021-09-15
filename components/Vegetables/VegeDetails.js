@@ -6,8 +6,6 @@ const VegeDetails = (props)=>{
 // console.log('9 plantId', props.plant)
 // console.log('10 plantsData', props.plantsData)
 
-
-//  console.log('name: ',props.plant.name,'\nlifeCycle: ',plant.lifeCycle,'\nimageId: ', plant.imageId)
   return(    
     <View>
       <Portal>

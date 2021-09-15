@@ -5,18 +5,15 @@ import { List,ListItemText} from 'react-native-paper';
 import axios from 'axios';
 import VegeDetails from './VegeDetails';
 
-const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
-
-const VegeItem = (props)=>{
-  // console.log('props: ', props.category);
-  // console.log(props.fullPlantData)
+const VegeItem = ({category, fullPlantData})=>{
   const [quantity, setQuantity] = useState(0);
   const [plantsData, setPlantsData] = useState([]);  
   const [plantDetails, setPlantDetails] = useState();
   const [idForDialog, setIdForDialog] = useState('');
 
   const [visible, setVisible] = React.useState(false);
-  const showDialog = () => setVisible(true); 
+  // const showDialog = () => setVisible(true); 
+  const doShowDialog = () => setVisible(!visible); 
   const hideDialog = () => setVisible(false);
   const plants =[];
   const addItems = ()=>setQuantity(prevCount => prevCount + 1 );
@@ -31,39 +28,15 @@ const VegeItem = (props)=>{
   const displayPlantDetails = (id)=>{
     console.log(id)
     setIdForDialog(id);
-    showDialog();
-    // openPlantDetailsDialog(id);
+    // showDialog();
+    doShowDialog();
   }//displayPlantDetails  
-
-  const openPlantDetailsDialog = (plant)=>{
-    console.log('name', plant)
-    // alert('name: '+plant.name+'\nlifeCycle: '+plant.lifeCycle+'\nimageId: '+ plant.imageId);
-    showDialog();
-    return (
-      <>
-        <Portal>
-          <Dialog visible={visible} onDismiss={hideDialog} >
-            <Dialog.Title>Allan</Dialog.Title>
-            <Dialog.Content>
-              <Paragraph>This is simple dialog</Paragraph>
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button onPress={hideDialog}>Done</Button>
-            </Dialog.Actions>
-          </Dialog>
-        </Portal>
-      </>
-    );
-  }
 
   return(
     <>
-      {/* {renderCatePlants} */}
-      {/* {plants} */}
-      {props.fullPlantData.filter(plantDetails1=>
-        plantDetails1.categoryId === props.category).map(plantDetails=>{
+      {fullPlantData.filter(plantDetails1=>
+        plantDetails1.categoryId === category).map(plantDetails=>{
           console.log('65 plantDetails', plantDetails)
-          // return(<View><Text>{plantDetails.plantName}</Text></View>)
           return(
         <View style={styles.vegeItem} key={plantDetails.plantId}>
           <TouchableOpacity style={styles.imgTitle} onPress={()=>displayPlantDetails(plantDetails.plantId)}>
@@ -78,9 +51,10 @@ const VegeItem = (props)=>{
             <TouchableOpacity onPress={addItems}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
  </View>
           <Portal>
-            <Dialog visible={visible} onDismiss={hideDialog} style={styles.dialog}>
+            {/* <Dialog visible={visible} onDismiss={hideDialog} style={styles.dialog}> */}
+            <Dialog visible={visible} onDismiss={doShowDialog} style={styles.dialog}>
               <Dialog.Title>{plantDetails.plantName}</Dialog.Title>
-              {/* <Dialog.Title>{props.fullPlantData.filter(plt => plt.plantId === idForDialog) }</Dialog.Title> */}
+              {/* <Dialog.Title>{fullPlantData.filter(plt => plt.plantId === idForDialog) }</Dialog.Title> */}
               <Dialog.Content>
               <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.plantImageId}@3x.jpg`,}}/>
                 <Paragraph><Text style={styles.dialogText}>Life cycle: </Text>{plantDetails.plantLifeCycle}</Paragraph>

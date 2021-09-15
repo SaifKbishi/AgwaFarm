@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import users from '../files/users';
+import {orderContext} from '../../orderContext';
 
 console.log('\n\n\n Hello from Device')
 const Device = ()=>{

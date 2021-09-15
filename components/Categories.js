@@ -35,7 +35,7 @@ const Categories = ()=>{
     // console.log('\n\n\n\n36 categoriesData from Categories:\n',categoriesData);    
     // console.log('\n\n\n\n36_2 plantsData from Categories:\n',plantsData);   
     return () => { 
-      source.cancel('Cancelling in cleanup');   
+      source.cancel('Cancelling in cleanup');
     }
   }, []);
  

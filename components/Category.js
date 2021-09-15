@@ -27,7 +27,7 @@ const Category = (props)=>{
     <>    
       {/* {renderCategories} */}
       {props.categoryDetails && 
-        props.categoryDetails.map((cate)=>{
+        props.categoryDetails.map((cate, index)=>{
           return(
             <List.AccordionGroup id={cate.id} style={styles.AccordionGroup}>
             <List.Accordion title={cate.name} id={cate.id} expanded={expanded} onPress={handlePress}>

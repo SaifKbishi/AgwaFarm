@@ -1,46 +1,47 @@
 /**
  * Agwa Farm
- *
- * @format
- * @flow strict-local
+ * Saif
  */
-
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 import Categories from './components/Categories';
 import Category from './components/Category';
 import VegeItem from './components/VegeItem';
 import Header from './components/Header';
 import Device from './components/Device';
-import { Portal, Provider } from 'react-native-paper';
-
-
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-} from 'react-native';
-
-// import {
-//   // Header,
-//   // Colors,
-// } from 'react-native/Libraries/NewAppScreen';
+import { Portal, Provider as PaperProvider } from 'react-native-paper';
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TouchableOpacity, AppState, } from 'react-native';
+import {orderContext} from './orderContext';
 
 const categoriesURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/agwafarm.json';
 const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
 
-
 const App: () => React$Node = () => {
+  console.log('hello from AgwaFarm');
   const [categories, setCategories] = useState();
   const [plants, setPlants] = useState();
-  console.log('hello from AgwaFarm');
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const {Provider} = orderContext;
+  const [user, setUser, device, setDevice, order, setOrder] = useState([]);
 
   useEffect(() => {
+    const subscription = AppState.addEventListener("change", nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === "active"
+      ) {
+        console.log("App has come to the foreground!");
+      }
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      console.log("AppState", appState.current);
+    });
     getCategories();
+
+    return () => {
+      subscription.remove();
+    };
   }, [])
 
   const getCategories = async ()=>{
@@ -50,7 +51,7 @@ const App: () => React$Node = () => {
 
   return (
     <>
-     <Provider>
+     <PaperProvider >
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
         <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
@@ -61,7 +62,7 @@ const App: () => React$Node = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-       </Provider>
+       </PaperProvider >
     </>
   );
 };

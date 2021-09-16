@@ -1,11 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import Storage from 'react-native-storage';
+// import AsyncStorage from 'react-native-community/async-storage';
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import users from '../files/users';
 
 console.log('\nHello from Device\n')
+
+
 const Device = ()=>{
   const [devices , setDevices] =useState([]);
+  const [setlectedDevice, setSetlectedDevice] = useState(null);
 
   useEffect(()=>{
     fetchDevices();
@@ -20,7 +25,9 @@ const Device = ()=>{
   }//fetchDevices
 
   const deviceSelected =(deviceName)=>{
-    console.log('selected device: ', deviceName)
+    console.log('selected device: ', deviceName);
+    setSetlectedDevice(deviceName);
+ 
   }
   
   const renderDevices =  devices.map((device)=>{

@@ -5,7 +5,7 @@ import { List,ListItemText} from 'react-native-paper';
 import VegeDetails from './VegeDetails';
 import DialogContent from '../DialogContent/DialogContent'
 
-const VegeItem = ({category, fullPlantData})=>{
+const VegeItem3 = ({category, plantDetails5})=>{
   const [quantity, setQuantity] = useState(0);
   const [plantsData, setPlantsData] = useState([]);  
   const [plantDetails, setPlantDetails] = useState();
@@ -19,51 +19,36 @@ const VegeItem = ({category, fullPlantData})=>{
   const removeItems = ()=>{ quantity > 0 ? setQuantity(prevCount => prevCount - 1 ) : setQuantity(0);}
   
 
-  const displayPlantDetails = (id, index)=>{
-    console.log('23',index)
- 
-    console.log('26 ',selectedVege);
+  const displayPlantDetails = (id, index)=>{    
     console.log(id);
-
     setIdForDialog(id);
-    // setState(prevState => ({ ...prevState, idForDialog: id}));
-    doShowDialog();
-    
+    doShowDialog();    
   }//displayPlantDetails  
-   
-  return(
-   
+  //  <TouchableOpacity style={styles.imgTitle} onPress={()=>displayPlantDetails(plantDetails5.plantId)}>
+  return(   
     <>
-      {fullPlantData.filter(plantDetails1=>
-        plantDetails1.categoryId === category).map((plantDetails, index)=>{
-          console.log('65 plantDetails', plantDetails, index)
-      
-          return(
-        <View style={styles.vegeItem} key={plantDetails.plantId}>        
-          <TouchableOpacity style={styles.imgTitle} onPress={()=>displayPlantDetails(plantDetails.plantId, index)}>
-            <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.plantImageId}@3x.jpg`,}}/>
-            <Text style={styles.vegeTitle}>{plantDetails.plantName}</Text>
-          </TouchableOpacity>
+      <View style={styles.vegeItem} key={plantDetails5.plantId}>        
+        <TouchableOpacity style={styles.imgTitle} onPress={()=>doShowDialog()}>
+          <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails5.plantImageId}@3x.jpg`,}}/>
+          <Text style={styles.vegeTitle}>{plantDetails5.plantName}</Text>
+        </TouchableOpacity>
 
- <View style={styles.quantityControls}>
-            <Text style={styles.quantityText}>{quantity}</Text>
-            <TouchableOpacity onPress={removeItems}><Text style={styles.controlsBtns}> - </Text></TouchableOpacity>
-            <TouchableOpacity onPress={addItems}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
- </View>
-
-          <Portal>
-            <Dialog visible={visible} onDismiss={doShowDialog} style={styles.dialog}>
-              <Dialog.Title>{plantDetails.plantName}</Dialog.Title>
-              <DialogContent plantDetails={plantDetails} key={plantDetails.plantId}/>       
-              <Dialog.Actions>
-                <Button onPress={doShowDialog}>Done</Button>
-              </Dialog.Actions>
-            </Dialog>
-          </Portal>
+        <View style={styles.quantityControls}>
+          <Text style={styles.quantityText}>{quantity}</Text>
+          <TouchableOpacity onPress={removeItems}><Text style={styles.controlsBtns}> - </Text></TouchableOpacity>
+          <TouchableOpacity onPress={addItems}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
         </View>
-          )
-        })
-      }
+
+        <Portal>
+          <Dialog visible={visible} onDismiss={doShowDialog} style={styles.dialog}>
+            <Dialog.Title>{plantDetails5.plantName}</Dialog.Title>
+            <DialogContent plantDetails={plantDetails5} key={plantDetails5.plantId}/>       
+            <Dialog.Actions>
+              <Button onPress={doShowDialog}>Done</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+      </View>
     </>
   )
 }
@@ -131,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VegeItem;
+export default VegeItem3;

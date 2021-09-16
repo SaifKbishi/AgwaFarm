@@ -7,9 +7,8 @@ import DAL from '../../DAL/DAL'
 
 const categoriesURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/agwafarm.json';
 const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
-// const categoriesDataArray=[];
-// const plantsDataArray =[];
 let fullPlantData =[];
+const categoriesDataArray=[];
 
 const Categories = ()=>{
   const [categoriesData, setCategoriesData] = useState([]);
@@ -19,42 +18,43 @@ const Categories = ()=>{
   console.log('hello from Categories');  
  
   useEffect(() => {
-    let source = axios.CancelToken.source();   
+    let source = axios.CancelToken.source();
     getCategories();
+    console.log('22 categoriesData', categoriesData)    
     getPlants();
-    addCategoryDetailsToPlantObj();  
-    // console.log('\n\n\n\n rawCategory from Categories:\n',rawCategory);
-    // console.log('\n\n\n\n36 categoriesData from Categories:\n',categoriesData);    
-    // console.log('\n\n\n\n36_2 plantsData from Categories:\n',plantsData);   
+    console.log('24 plantsData', plantsData)
+    addCategoryDetailsToPlantObj(); 
+
     return () => { 
-      source.cancel('Cancelling in cleanup'); 
-    }  
+      source.cancel('Cancelling in cleanup');   
+    }   
   }, []);
  
-  const getCategories = async () =>{
+  const getCategories = async () =>{  
     try{
       const cateResponse = await axios.get(categoriesURL)
         setRawCategory(cateResponse.data.categories);
         cateResponse.data.categories.forEach(cateItem => {
-        let categoriesDataArray = cateItem.plants.map(plant => {
-            return{
+        cateItem.plants.forEach(plant => {
+            let cateObj= {
               categoryId: cateItem.id,
               categoryName: cateItem.name,
               plantId: plant.id,
               plantName: plant.name,
             }
+            categoriesDataArray.push(cateObj);
           });   
-          setCategoriesData(categoriesDataArray);  
+          setCategoriesData(categoriesDataArray);
         });
     }catch(error){  
-      console.log('\n error in getCategories: ',error);    
-      } 
+      console.log('\n error in getCategories: ',error);  
+      }   
   }//getCategories 
 
   const getPlants = async () =>{ 
     try{
-      const plantsResponse = await axios.get(plantsURL)
-        let plantsDataArray = plantsResponse.data.plants.map(plantItem => {
+      const plantsResponse = await axios.get(plantsURL);
+        let plantsDataArray = plantsResponse.data.plants.map(plantItem => {   
           return{
             plantId:plantItem.id,
             plantName:plantItem.name,
@@ -65,10 +65,9 @@ const Categories = ()=>{
             plantDescription:plantItem.description,                    
             plantNutritionFactsPortionInfo:plantItem.nutritionFacts.portionInfo,
             plantNutritionFacts:plantItem.nutritionFacts.items,
-          }
-          setPlantsData(plantsDataArray);
+          }          
         });
-        
+        setPlantsData(plantsDataArray);
     }catch(error){console.log('\n error fetching Plants', error)}
   }//getPlants
     

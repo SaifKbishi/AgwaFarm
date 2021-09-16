@@ -13,9 +13,7 @@ const VegeItem = ({category, fullPlantData})=>{
 
   // const [ plantsData, setPlantsData, plantDetails, setPlantDetails, idForDialog, setIdForDialog] = useState();
   const [visible, setVisible] = useState(false);
-
   const doShowDialog = () => setVisible(!visible); 
-
   const addItems = ()=>setQuantity(prevCount => prevCount + 1 );
   const removeItems = ()=>{ quantity > 0 ? setQuantity(prevCount => prevCount - 1 ) : setQuantity(0);}
   
@@ -34,6 +32,7 @@ const VegeItem = ({category, fullPlantData})=>{
           console.log('65 plantDetails', plantDetails)
           return(
         <View style={styles.vegeItem} key={plantDetails.plantId}>
+        
           <TouchableOpacity style={styles.imgTitle} onPress={()=>displayPlantDetails(plantDetails.plantId)}>
             <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.plantImageId}@3x.jpg`,}}/>
             <Text style={styles.vegeTitle}>{plantDetails.plantName}</Text>
@@ -44,15 +43,17 @@ const VegeItem = ({category, fullPlantData})=>{
             <TouchableOpacity onPress={removeItems}><Text style={styles.controlsBtns}> - </Text></TouchableOpacity>
             <TouchableOpacity onPress={addItems}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
  </View>
+
           <Portal>
             <Dialog visible={visible} onDismiss={doShowDialog} style={styles.dialog}>
               <Dialog.Title>{plantDetails.plantName}</Dialog.Title>
-              <DialogContent plantDetails={plantDetails} />       
+              <DialogContent plantDetails={plantDetails} key={plantDetails.plantId}/>       
               <Dialog.Actions>
                 <Button onPress={doShowDialog}>Done</Button>
               </Dialog.Actions>
             </Dialog>
           </Portal>
+
         </View>
           )
         })

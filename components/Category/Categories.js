@@ -7,8 +7,8 @@ import DAL from '../../DAL/DAL'
 
 const categoriesURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/agwafarm.json';
 const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
-const categoriesDataArray=[];
-const plantsDataArray =[];
+// const categoriesDataArray=[];
+// const plantsDataArray =[];
 let fullPlantData =[];
 
 const Categories = ()=>{
@@ -16,7 +16,7 @@ const Categories = ()=>{
   const [plantsData, setPlantsData] = useState([]);
   const [rawCategory, setRawCategory] = useState([]);
 
-  console.log('hello from Categories');
+  console.log('hello from Categories');  
  
   useEffect(() => {
     let source = axios.CancelToken.source();   
@@ -28,39 +28,34 @@ const Categories = ()=>{
     // console.log('\n\n\n\n36_2 plantsData from Categories:\n',plantsData);   
     return () => { 
       source.cancel('Cancelling in cleanup'); 
-    } 
+    }  
   }, []);
  
   const getCategories = async () =>{
     try{
       const cateResponse = await axios.get(categoriesURL)
-      // const cateResponse = getCategories2();
         setRawCategory(cateResponse.data.categories);
         cateResponse.data.categories.forEach(cateItem => {
-          cateItem.plants.forEach(plant => {
-            let cateObj ={
+        let categoriesDataArray = cateItem.plants.map(plant => {
+            return{
               categoryId: cateItem.id,
               categoryName: cateItem.name,
               plantId: plant.id,
               plantName: plant.name,
-            } 
-            categoriesDataArray.push(cateObj);
+            }
           });   
+          setCategoriesData(categoriesDataArray);  
         });
-        setCategoriesData(categoriesDataArray);  
-      // });
     }catch(error){  
-      console.log('\n error in getCategories: ',error);   
-      }
-  }//getCategories
+      console.log('\n error in getCategories: ',error);    
+      } 
+  }//getCategories 
 
-  const getPlants = async () =>{
+  const getPlants = async () =>{ 
     try{
       const plantsResponse = await axios.get(plantsURL)
-      // const plantsResponse = DAL.getPlants2();
-        // let plantsData = plantsResponse.data.plants;
-        plantsResponse.data.plants.forEach(plantItem => {
-          let plantObj ={
+        let plantsDataArray = plantsResponse.data.plants.map(plantItem => {
+          return{
             plantId:plantItem.id,
             plantName:plantItem.name,
             plantImageId:plantItem.imageId,
@@ -71,9 +66,9 @@ const Categories = ()=>{
             plantNutritionFactsPortionInfo:plantItem.nutritionFacts.portionInfo,
             plantNutritionFacts:plantItem.nutritionFacts.items,
           }
-          plantsDataArray.push(plantObj);
+          setPlantsData(plantsDataArray);
         });
-        setPlantsData(plantsDataArray);
+        
     }catch(error){console.log('\n error fetching Plants', error)}
   }//getPlants
     
@@ -82,11 +77,9 @@ const Categories = ()=>{
     fullPlantData = plantsData.map(plant =>{
         let plantInCate = categoriesData.find(pIC => pIC.plantId === plant.plantId);
         return plantInCate ? {...plant, ...plantInCate} : plant;
-      }); 
-    }    
-
+      });
+    }
   }//addCategoryDetailsToPlantObj
-
   return(
     <View style={styles.vegeItem}>
         <Category categoryDetails={rawCategory} fullPlantData={fullPlantData} />

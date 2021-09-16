@@ -6,11 +6,9 @@ import users from '../files/users';
 console.log('\nHello from Device\n')
 const Device = ()=>{
   const [devices , setDevices] =useState([]);
-  const [selectedDevice, setslectedDevice] = useState();
 
   useEffect(()=>{
     fetchDevices();
-    // getDevices();
   },[devices]);
 
   const fetchDevices = ()=>{
@@ -24,7 +22,7 @@ const Device = ()=>{
   const deviceSelected =(deviceName)=>{
     console.log('selected device: ', deviceName)
   }
-
+  
   const renderDevices =  devices.map((device)=>{
     return(
       <TouchableOpacity style={styles.device} key={device.id} onPress={()=>deviceSelected(device.deviceName)}>

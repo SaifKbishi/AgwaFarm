@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import { List,ListItemText} from 'react-native-paper';
-import axios from 'axios';
 import VegeDetails from './VegeDetails';
+import DialogContent from '../DialogContent/DialogContent'
 
 const VegeItem = ({category, fullPlantData})=>{
   const [quantity, setQuantity] = useState(0);
@@ -11,24 +11,19 @@ const VegeItem = ({category, fullPlantData})=>{
   const [plantDetails, setPlantDetails] = useState();
   const [idForDialog, setIdForDialog] = useState('');
 
-  const [visible, setVisible] = React.useState(false);
-  // const showDialog = () => setVisible(true); 
+  // const [ plantsData, setPlantsData, plantDetails, setPlantDetails, idForDialog, setIdForDialog] = useState();
+  const [visible, setVisible] = useState(false);
+
   const doShowDialog = () => setVisible(!visible); 
-  const hideDialog = () => setVisible(false);
-  const plants =[];
+
   const addItems = ()=>setQuantity(prevCount => prevCount + 1 );
-  const removeItems = ()=>{
-    if(quantity > 0){
-      setQuantity(prevCount => prevCount - 1 );
-    }else{
-      setQuantity(0);
-    }    
-  }
+  const removeItems = ()=>{ quantity > 0 ? setQuantity(prevCount => prevCount - 1 ) : setQuantity(0);}
+  
 
   const displayPlantDetails = (id)=>{
     console.log(id)
     setIdForDialog(id);
-    // showDialog();
+    // setState(prevState => ({ ...prevState, idForDialog: id}));
     doShowDialog();
   }//displayPlantDetails  
 
@@ -40,7 +35,6 @@ const VegeItem = ({category, fullPlantData})=>{
           return(
         <View style={styles.vegeItem} key={plantDetails.plantId}>
           <TouchableOpacity style={styles.imgTitle} onPress={()=>displayPlantDetails(plantDetails.plantId)}>
-          {/* <TouchableOpacity style={styles.imgTitle} onPress={()=>showDialog()}> */}
             <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.plantImageId}@3x.jpg`,}}/>
             <Text style={styles.vegeTitle}>{plantDetails.plantName}</Text>
           </TouchableOpacity>
@@ -51,30 +45,11 @@ const VegeItem = ({category, fullPlantData})=>{
             <TouchableOpacity onPress={addItems}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
  </View>
           <Portal>
-            {/* <Dialog visible={visible} onDismiss={hideDialog} style={styles.dialog}> */}
             <Dialog visible={visible} onDismiss={doShowDialog} style={styles.dialog}>
               <Dialog.Title>{plantDetails.plantName}</Dialog.Title>
-              {/* <Dialog.Title>{fullPlantData.filter(plt => plt.plantId === idForDialog) }</Dialog.Title> */}
-              <Dialog.Content>
-              <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.plantImageId}@3x.jpg`,}}/>
-                <Paragraph><Text style={styles.dialogText}>Life cycle: </Text>{plantDetails.plantLifeCycle}</Paragraph>
-                <Paragraph><Text style={styles.dialogText}>Description: </Text>{plantDetails.plantDescription}</Paragraph>
-                <Paragraph><Text style={styles.dialogText}>Seed To Crop: </Text>{plantDetails.plantSeedToCrop}</Paragraph>
-                <Paragraph><Text style={styles.dialogText}>Yield: </Text>{plantDetails.plantYield}</Paragraph>
-                <Paragraph><Text style={styles.dialogText}>Nutrition facts: </Text></Paragraph>
-                <List.AccordionGroup>
-                {plantDetails.plantNutritionFacts.map((ntf)=>{
-                  return(
-                  <List.Accordion title={ntf.key} id={ntf.key}>
-                  <List.Item title="Nutrient value: " description={ntf.nutrientValue} style={styles.ntfTitle}/>
-                  <List.Item title="% Of RDA: " description={ntf.percentageOfRDA} style={styles.ntfTitle}/>
-                  </List.Accordion>  
-                  )
-                })}
-                </List.AccordionGroup>
-              </Dialog.Content>
+              <DialogContent plantDetails={plantDetails} />       
               <Dialog.Actions>
-                <Button onPress={hideDialog}>Done</Button>
+                <Button onPress={doShowDialog}>Done</Button>
               </Dialog.Actions>
             </Dialog>
           </Portal>

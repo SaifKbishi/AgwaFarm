@@ -16,7 +16,7 @@ const App: () => React$Node = () => {
   console.log('hello from AgwaFarm');
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
-    const [user, setUser, device, setDevice, order, setOrder] = useState([]);
+  const [user, setUser, device, setDevice, order, setOrder] = useState([]);
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", nextAppState => {

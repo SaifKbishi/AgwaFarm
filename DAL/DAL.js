@@ -7,6 +7,7 @@ export async function getCategories2(){
   return await axios.get(categoriesURL)
 }
 export async function getPlants2(){
-  console.log('from DAL2')
   return await axios.get(plantsURL)
 }
+
+// export default DAL

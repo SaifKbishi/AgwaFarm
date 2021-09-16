@@ -19,7 +19,7 @@ const Categories = ()=>{
   console.log('hello from Categories');
  
   useEffect(() => {
-    let source = axios.CancelToken.source();      
+    let source = axios.CancelToken.source();   
     getCategories();
     getPlants();
     addCategoryDetailsToPlantObj();  
@@ -35,9 +35,8 @@ const Categories = ()=>{
     try{
       const cateResponse = await axios.get(categoriesURL)
       // const cateResponse = getCategories2();
-        let cateData = cateResponse.data.categories;
-        setRawCategory(cateData);
-        cateData.forEach(cateItem => {
+        setRawCategory(cateResponse.data.categories);
+        cateResponse.data.categories.forEach(cateItem => {
           cateItem.plants.forEach(plant => {
             let cateObj ={
               categoryId: cateItem.id,
@@ -59,8 +58,8 @@ const Categories = ()=>{
     try{
       const plantsResponse = await axios.get(plantsURL)
       // const plantsResponse = DAL.getPlants2();
-        let plantsData = plantsResponse.data.plants;
-        plantsData.forEach(plantItem => {
+        // let plantsData = plantsResponse.data.plants;
+        plantsResponse.data.plants.forEach(plantItem => {
           let plantObj ={
             plantId:plantItem.id,
             plantName:plantItem.name,

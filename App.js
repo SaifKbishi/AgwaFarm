@@ -5,8 +5,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 import Categories from './components/Category/Categories';
-import Category from './components/Category/Category';
-import VegeItem from './components/Vegetables/VegeItem';
 import Header from './components/Header';
 import Device from './components/Device';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -44,7 +42,7 @@ const App: () => React$Node = () => {
           <View style={styles.body}>
             <Header/>            
             <Device/>
-            <Categories/>
+            {/* <Categories/> */}
           </View>
         </ScrollView>
       </SafeAreaView>

@@ -1,73 +1,82 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
-import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
 import { List,ListItemText} from 'react-native-paper';
-import VegeDetails from './VegeDetails';
 import DialogContent from '../DialogContent/DialogContent'
 
-const VegeItem = ({category, fullPlantData})=>{
+const cart =[];
+const VegeItem = ({category, plantDetails5})=>{
   const [quantity, setQuantity] = useState(0);
-  const [plantsData, setPlantsData] = useState([]);  
-  const [plantDetails, setPlantDetails] = useState();
-  const [idForDialog, setIdForDialog] = useState('');
-  const [selectedVege, setSelectedVege] = useState(-1);
 
-  // const [ plantsData, setPlantsData, plantDetails, setPlantDetails, idForDialog, setIdForDialog] = useState();
+  const [orderCart, setOrderCart] = useState([]);
   const [visible, setVisible] = useState(false);
   const doShowDialog = () => setVisible(!visible); 
-  const addItems = ()=>setQuantity(prevCount => prevCount + 1 );
-  const removeItems = ()=>{ quantity > 0 ? setQuantity(prevCount => prevCount - 1 ) : setQuantity(0);}
+
+  const addItems = (plantToAdd)=>{
+      const updatedCart = [...orderCart];
+      setQuantity(prevCount => prevCount + 1 );
+      updatedCart.push({
+        qty: quantity,
+        plant: plantToAdd,
+      });
+      setOrderCart(updatedCart);
+      cart.push(updatedCart);
+    }
+  const removeItems = (plantToAdd)=>{ 
+    const updatedCart = [...orderCart];
+    quantity > 0 ? setQuantity(prevCount => prevCount - 1 ) : setQuantity(0);
+    updatedCart.push({
+      qty: quantity,
+      plant: plantToAdd,
+    });
+    setOrderCart(updatedCart);
+    cart.push(updatedCart);
+  }
   
+  useEffect(() => {
+   console.log('Current Cart:\n',cart)
+  }, [quantity])
 
-  const displayPlantDetails = (id, index)=>{
-    console.log('23',index)
- 
-    console.log('26 ',selectedVege);
+  const displayPlantDetails = (id, index)=>{    
     console.log(id);
-
     setIdForDialog(id);
-    // setState(prevState => ({ ...prevState, idForDialog: id}));
-    doShowDialog();
-    
-  }//displayPlantDetails  
-   
-  return(
-   
+    doShowDialog();    
+  }//displayPlantDetails
+  return(   
     <>
-      {fullPlantData.filter(plantDetails1=>
-        plantDetails1.categoryId === category).map((plantDetails, index)=>{
-          console.log('65 plantDetails', plantDetails, index)
-      
-          return(
-        <View style={styles.vegeItem} key={plantDetails.plantId}>        
-          <TouchableOpacity style={styles.imgTitle} onPress={()=>displayPlantDetails(plantDetails.plantId, index)}>
-            <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.plantImageId}@3x.jpg`,}}/>
-            <Text style={styles.vegeTitle}>{plantDetails.plantName}</Text>
-          </TouchableOpacity>
+      <View style={styles.vegeItem} key={plantDetails5.plantId}>        
+        <TouchableOpacity style={styles.imgTitle} onPress={()=>doShowDialog()}>
+          <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails5.plantImageId}@3x.jpg`,}}/>
+          <Text style={styles.vegeTitle}>{plantDetails5.plantName}</Text>
+        </TouchableOpacity>
 
- <View style={styles.quantityControls}>
-            <Text style={styles.quantityText}>{quantity}</Text>
-            <TouchableOpacity onPress={removeItems}><Text style={styles.controlsBtns}> - </Text></TouchableOpacity>
-            <TouchableOpacity onPress={addItems}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
- </View>
-
-          <Portal>
-            <Dialog visible={visible} onDismiss={doShowDialog} style={styles.dialog}>
-              <Dialog.Title>{plantDetails.plantName}</Dialog.Title>
-              <DialogContent plantDetails={plantDetails} key={plantDetails.plantId}/>       
-              <Dialog.Actions>
-                <Button onPress={doShowDialog}>Done</Button>
-              </Dialog.Actions>
-            </Dialog>
-          </Portal>
+        <View style={styles.quantityControls}>
+          <Text style={styles.quantityText}>{quantity}</Text>
+          <TouchableOpacity onPress={()=>removeItems(plantDetails5.plantName)}><Text style={styles.controlsBtns}> - </Text></TouchableOpacity>
+          <TouchableOpacity onPress={()=>addItems(plantDetails5.plantName)}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
         </View>
-          )
-        })
-      }
+
+        <Portal>        
+          <Dialog visible={visible} onDismiss={doShowDialog} style={styles.dialog}>
+          <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
+            <Dialog.Title>{plantDetails5.plantName}</Dialog.Title>
+            <DialogContent plantDetails={plantDetails5} key={plantDetails5.plantId}/>       
+            <Dialog.Actions>
+              <Button onPress={doShowDialog}>Done</Button>
+            </Dialog.Actions>
+            </ScrollView>
+          </Dialog>          
+        </Portal>
+      </View>
     </>
   )
 }
 const styles = StyleSheet.create({
+   scrollView: {
+    marginLeft: 1,
+    marginRight: 1,
+    flex: 1,
+  }, 
   ntfText:{
     fontSize: 12,
     justifyContent: "flex-start",

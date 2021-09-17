@@ -3,9 +3,7 @@ import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper'
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import { List,ListItemText} from 'react-native-paper';
 
-const DialogContent = ({plantDetails, isVisible})=>{
-  const [visible, setVisible] = React.useState(isVisible);
-  const doShowDialog = () => setVisible(!visible); 
+const DialogContent = ({plantDetails})=>{
 
   return(    
     <Dialog.Content key={plantDetails.plantId}>

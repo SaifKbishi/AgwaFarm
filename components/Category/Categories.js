@@ -15,7 +15,7 @@ const Categories = ()=>{
   const [plantsData, setPlantsData] = useState([]);
   const [rawCategory, setRawCategory] = useState([]);
 
-  console.log('hello from Categories');  
+  // console.log('hello from Categories');  
  
   useEffect(() => {
     let source = axios.CancelToken.source();
@@ -26,7 +26,7 @@ const Categories = ()=>{
     addCategoryDetailsToPlantObj(); 
 
     return () => { 
-      source.cancel('Cancelling in cleanup');   
+      source.cancel('Cancelling in cleanup');
     }   
   }, []);
  
@@ -34,6 +34,7 @@ const Categories = ()=>{
     try{
       const cateResponse = await axios.get(categoriesURL)
         setRawCategory(cateResponse.data.categories);
+        console.log(cateResponse.data.categories.length);
         cateResponse.data.categories.forEach(cateItem => {
         cateItem.plants.forEach(plant => {
             let cateObj= {
@@ -44,16 +45,18 @@ const Categories = ()=>{
             }
             categoriesDataArray.push(cateObj);
           });   
-          setCategoriesData(categoriesDataArray);
+          
         });
+        setCategoriesData(categoriesDataArray);
     }catch(error){  
-      console.log('\n error in getCategories: ',error);  
+      console.log('\n error in getCategories: ',error);    
       }   
   }//getCategories 
 
   const getPlants = async () =>{ 
     try{
       const plantsResponse = await axios.get(plantsURL);
+      console.log(plantsResponse.data.plants.length);
         let plantsDataArray = plantsResponse.data.plants.map(plantItem => {   
           return{
             plantId:plantItem.id,
@@ -73,7 +76,8 @@ const Categories = ()=>{
     
   const addCategoryDetailsToPlantObj = async ()=>{
     if(plantsData.length > 0 && categoriesData.length >0){
-    fullPlantData = plantsData.map(plant =>{
+    fullPlantData = await plantsData.map(plant =>{
+      console.log(plant)
         let plantInCate = categoriesData.find(pIC => pIC.plantId === plant.plantId);
         return plantInCate ? {...plant, ...plantInCate} : plant;
       });

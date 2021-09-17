@@ -1,16 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Storage from 'react-native-storage';
-// import AsyncStorage from 'react-native-community/async-storage';
+import Categories from './Category/Categories';
+// import { Checkbox, Paragraph  } from 'react-native-paper';
+
+
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import users from '../files/users';
 
-console.log('\nHello from Device\n')
-
-
+// console.log('\nHello from Device\n')
 const Device = ()=>{
   const [devices , setDevices] =useState([]);
   const [setlectedDevice, setSetlectedDevice] = useState(null);
+  // const [instructions, setInstructions] = useState(true);
+  // const [checked, setChecked] = useState(false);
 
   useEffect(()=>{
     fetchDevices();
@@ -26,8 +29,7 @@ const Device = ()=>{
 
   const deviceSelected =(deviceName)=>{
     console.log('selected device: ', deviceName);
-    setSetlectedDevice(deviceName);
- 
+    setSetlectedDevice(deviceName); 
   }
   
   const renderDevices =  devices.map((device)=>{
@@ -39,9 +41,12 @@ const Device = ()=>{
   });
 
   return(
+    <>
     <View style={styles.allDevice}>
       {renderDevices}
     </View>
+    <Categories/>
+    </>
   )
 }
 

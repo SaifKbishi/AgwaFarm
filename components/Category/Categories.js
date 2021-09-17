@@ -14,16 +14,13 @@ const Categories = ()=>{
   const [categoriesData, setCategoriesData] = useState([]);
   const [plantsData, setPlantsData] = useState([]);
   const [rawCategory, setRawCategory] = useState([]);
-
-  // console.log('hello from Categories');  
  
   useEffect(() => {
     let source = axios.CancelToken.source();
-    getCategories();
-    console.log('22 categoriesData', categoriesData)    
-    getPlants();
-    console.log('24 plantsData', plantsData)
-    addCategoryDetailsToPlantObj(); 
+    getCategories(); 
+    getPlants(); 
+    
+    addCategoryDetailsToPlantObj();   
 
     return () => { 
       source.cancel('Cancelling in cleanup');
@@ -44,8 +41,7 @@ const Categories = ()=>{
               plantName: plant.name,
             }
             categoriesDataArray.push(cateObj);
-          });   
-          
+          });          
         });
         setCategoriesData(categoriesDataArray);
     }catch(error){  
@@ -76,13 +72,13 @@ const Categories = ()=>{
     
   const addCategoryDetailsToPlantObj = async ()=>{
     if(plantsData.length > 0 && categoriesData.length >0){
-    fullPlantData = await plantsData.map(plant =>{
-      console.log(plant)
+      fullPlantData = await plantsData.map(plant =>{
         let plantInCate = categoriesData.find(pIC => pIC.plantId === plant.plantId);
         return plantInCate ? {...plant, ...plantInCate} : plant;
       });
-    }
+    }    
   }//addCategoryDetailsToPlantObj
+
   return(
     <View style={styles.vegeItem}>
         <Category categoryDetails={rawCategory} fullPlantData={fullPlantData} />

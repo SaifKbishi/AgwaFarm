@@ -30,7 +30,7 @@ const App: () => React$Node = () => {
     });
 
     return () => {
-      subscription.remove();
+      subscription.cancel();
     };
   }, [])
 
@@ -42,7 +42,6 @@ const App: () => React$Node = () => {
           <View style={styles.body}>
             <Header/>            
             <Device/>
-            {/* <Categories/> */}
           </View>
         </ScrollView>
       </SafeAreaView>

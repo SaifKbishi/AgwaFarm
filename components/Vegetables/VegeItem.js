@@ -25,12 +25,9 @@ const VegeItem = ({category, plantDetails5})=>{
   const removeItems = (plantToAdd)=>{ 
     const updatedCart = [...orderCart];
     quantity > 0 ? setQuantity(prevCount => prevCount - 1 ) : setQuantity(0);
-    updatedCart.push({
-      qty: quantity,
-      plant: plantToAdd,
-    });
+    updatedCart.pop();
     setOrderCart(updatedCart);
-    cart.push(updatedCart);
+    // cart.pop(updatedCart);
   }
   
   useEffect(() => {

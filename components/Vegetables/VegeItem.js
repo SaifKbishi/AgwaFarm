@@ -35,33 +35,32 @@ const VegeItem = ({plant_details})=>{
 
   return(   
     <>
-      <View style={styles.vegeItem} key={plantDetails5.plantId}>        
+      <View style={styles.vegeItem} key={plant_details.id}>        
         <TouchableOpacity style={styles.imgTitle} onPress={()=>doShowDialog()}>
-          <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails5.plantImageId}@3x.jpg`,}}/>
-          <Text style={styles.vegeTitle}>{plantDetails5.plantName}</Text>
+          <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plant_details.imageId}@3x.jpg`,}}/>
+          <Text style={styles.vegeTitle}>{plant_details.name}</Text>
         </TouchableOpacity>
-
         <View style={styles.quantityControls}>
           <Text style={styles.quantityText}>{quantity}</Text>
-          <TouchableOpacity onPress={()=>removeItems(plantDetails5.plantName)}><Text style={styles.controlsBtns}> - </Text></TouchableOpacity>
-          <TouchableOpacity onPress={()=>addItems(plantDetails5.plantName)}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
+          <TouchableOpacity onPress={()=>updateItemQuantity(item.id , item.quantity)}><Text style={styles.controlsBtns}> - </Text></TouchableOpacity>
+          <TouchableOpacity onPress={()=>addItem(plant_details)}><Text style={styles.controlsBtns}> + </Text></TouchableOpacity>
         </View>
-
         <Portal>        
           <Dialog visible={visible} onDismiss={doShowDialog} style={styles.dialog}>
           <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
-            <Dialog.Title>{plantDetails5.plantName}</Dialog.Title>
-            <DialogContent plantDetails={plantDetails5} key={plantDetails5.plantId}/>       
+            <Dialog.Title>{plant_details.name}</Dialog.Title>
+            <DialogContent plantDetails={plant_details} key={plant_details.id}/>       
             <Dialog.Actions>
               <Button onPress={doShowDialog}>Done</Button>
             </Dialog.Actions>
-            </ScrollView>
+          </ScrollView>
           </Dialog>          
         </Portal>
       </View>
     </>
   )
 }
+
 const styles = StyleSheet.create({
    scrollView: {
     marginLeft: 1,

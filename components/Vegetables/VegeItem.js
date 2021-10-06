@@ -5,7 +5,7 @@ import { List,ListItemText} from 'react-native-paper';
 import DialogContent from '../DialogContent/DialogContent'
 
 const cart =[];
-const VegeItem = ({category, plantDetails5})=>{
+const VegeItem = ({plant_details})=>{
   const [quantity, setQuantity] = useState(0);
 
   const [orderCart, setOrderCart] = useState([]);
@@ -31,14 +31,8 @@ const VegeItem = ({category, plantDetails5})=>{
   }
   
   useEffect(() => {
-   console.log('Current Cart:\n',cart)
   }, [quantity])
 
-  const displayPlantDetails = (id, index)=>{    
-    console.log(id);
-    setIdForDialog(id);
-    doShowDialog();    
-  }//displayPlantDetails
   return(   
     <>
       <View style={styles.vegeItem} key={plantDetails5.plantId}>        

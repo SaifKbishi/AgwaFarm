@@ -4,17 +4,16 @@ import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import { List,ListItemText} from 'react-native-paper';
 
 const DialogContent = ({plantDetails})=>{
-
   return(    
-    <Dialog.Content key={plantDetails.plantId}>
-      <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.plantImageId}@3x.jpg`,}}/>
-      <Paragraph><Text style={styles.dialogText}>Life cycle: </Text>{plantDetails.plantLifeCycle}</Paragraph>
-      <Paragraph><Text style={styles.dialogText}>Description: </Text>{plantDetails.plantDescription}</Paragraph>
-      <Paragraph><Text style={styles.dialogText}>Seed To Crop: </Text>{plantDetails.plantSeedToCrop}</Paragraph>
-      <Paragraph><Text style={styles.dialogText}>Yield: </Text>{plantDetails.plantYield}</Paragraph>
+    <Dialog.Content key={plantDetails.id}>
+      <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.imageId}@3x.jpg`,}}/>
+      <Paragraph><Text style={styles.dialogText}>Life cycle: </Text>{plantDetails.lifeCycle}</Paragraph>
+      <Paragraph><Text style={styles.dialogText}>Description: </Text>{plantDetails.description}</Paragraph>
+      <Paragraph><Text style={styles.dialogText}>Seed To Crop: </Text>{plantDetails.seedToCrop}</Paragraph>
+      <Paragraph><Text style={styles.dialogText}>Yield: </Text>{plantDetails.yield}</Paragraph>
       <Paragraph><Text style={styles.dialogText}>Nutrition facts: </Text></Paragraph>
       <List.AccordionGroup>
-      {plantDetails.plantNutritionFacts.map((ntf)=>{
+      {plantDetails.nutritionFacts.items.map((ntf)=>{
         return(
         <List.Accordion title={ntf.key} id={ntf.key}>
         <List.Item title="Nutrient value: " description={ntf.nutrientValue} style={styles.ntfTitle}/>

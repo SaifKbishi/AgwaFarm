@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import users from '../files/users';
+import myGarden from '../files/myGarden.png'
 
 const Header = ()=>{  
   return(
@@ -9,10 +10,8 @@ const Header = ()=>{
       <Text style={styles.headerText}>Menu</Text>
     </TouchableOpacity>
       <TouchableOpacity style={styles.logoContainer}>
-        <Image style={styles.logo} source={{
-            uri: `https://static.wixstatic.com/media/140a3e_57c521d708be4fdd96f1816b71ca70ae~mv2.png/v1/fill/w_225,h_157,al_c,lg_1,q_85/logo-02%201.webp`,
-            alt:'AgwaFarmLogo'
-          }}
+        <Image style={styles.logo} 
+          source={require('../files/myGarden.png')}
         />
       </TouchableOpacity>
       <TouchableOpacity>
@@ -32,8 +31,8 @@ const styles = StyleSheet.create({
  },
  logo:{
    resizeMode: "contain",
-   height: 60,
-   width: 70,
+   height: 75,
+   width: 80,
  },
  headerText:{
    paddingVertical:15,

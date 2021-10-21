@@ -1,5 +1,5 @@
 /**
- * Agwa Farm
+ * mygarden
  * Saif
  */
 import React, {useState, useEffect, useRef} from 'react';
@@ -11,7 +11,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TouchableOpacity, AppState } from 'react-native';
 
 const App: () => React$Node = () => {
-  console.log('hello from AgwaFarm');
+  console.log('hello from mygarden');
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   const [user, setUser, device, setDevice, order, setOrder] = useState([]);

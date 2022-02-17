@@ -3,6 +3,8 @@ import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper'
 import { StyleSheet, View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
 import { List,ListItemText} from 'react-native-paper';
 import DialogContent from '../DialogContent/DialogContent'
+const {getImage} = require('../../DAL/DAL');
+
 
 const cart =[];
 const VegeItem = ({plant_details})=>{
@@ -36,8 +38,8 @@ const VegeItem = ({plant_details})=>{
   return(   
     <>
       <View style={styles.vegeItem} key={plant_details.id}>        
-        <TouchableOpacity style={styles.imgTitle} onPress={()=>doShowDialog()}>
-          <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plant_details.imageId}@3x.jpg`,}}/>
+        <TouchableOpacity style={styles.imgTitle} onPress={()=>doShowDialog()}>          
+          <Image style={styles.tinyImage} source={{uri: `${getImage(plant_details.imageId)}`,}}/>
           <Text style={styles.vegeTitle}>{plant_details.name}</Text>
         </TouchableOpacity>
         <View style={styles.quantityControls}>

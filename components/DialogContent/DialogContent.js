@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import { List,ListItemText} from 'react-native-paper';
+const {getImage} = require('../../DAL/DAL');
+
 
 const DialogContent = ({plantDetails})=>{
   return(    
-    <Dialog.Content key={plantDetails.id}>
-      <Image style={styles.tinyImage} source={{uri: `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.imageId}@3x.jpg`,}}/>
+    <Dialog.Content key={plantDetails.id}>      
+      <Image style={styles.tinyImage} source={{uri: `${getImage(plantDetails.imageId)}`,}}/>
       <Paragraph><Text style={styles.dialogText}>Life cycle: </Text>{plantDetails.lifeCycle}</Paragraph>
       <Paragraph><Text style={styles.dialogText}>Description: </Text>{plantDetails.description}</Paragraph>
       <Paragraph><Text style={styles.dialogText}>Seed To Crop: </Text>{plantDetails.seedToCrop}</Paragraph>

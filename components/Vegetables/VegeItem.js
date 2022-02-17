@@ -51,7 +51,7 @@ const VegeItem = ({plant_details})=>{
           <Dialog visible={visible} onDismiss={doShowDialog} style={styles.dialog}>
           <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
             <Dialog.Title>{plant_details.name}</Dialog.Title>
-            <DialogContent plantDetails={plant_details} key={plant_details.id+13}/>       
+            <DialogContent plantDetails={plant_details} key={plant_details.id}/>       
             <Dialog.Actions>
               <Button onPress={doShowDialog} key={plant_details.id+11}>Done</Button>
             </Dialog.Actions>

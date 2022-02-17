@@ -5,8 +5,6 @@ import { Portal, Provider, List,ListItemText } from 'react-native-paper';
 import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TouchableOpacity,} from 'react-native';
 const {getCategoryData,getPlantsData} = require('../../DAL/DAL');
 
-// const categoriesURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/agwafarm.json';
-// const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/data/catalogs/plants.json';
 let fullPlantData =[];
 const categoriesDataArray=[];
 
@@ -26,7 +24,6 @@ const Categories = ()=>{
  
   const getCategories = async () =>{  
     try{
-      // const cateResponse = await axios.get(categoriesURL)
       const cateResponse = await getCategoryData();
         setRawCategory(cateResponse.data.categories);    
         setCategoriesData(cateResponse.data.categories);
@@ -37,7 +34,6 @@ const Categories = ()=>{
 
   const getPlants = async () =>{ 
     try{
-      // const plantsResponse = await axios.get(plantsURL);
       const plantsResponse = await getPlantsData();
         setPlantsData(plantsResponse.data.plants);
     }catch(error){console.log('\n error fetching Plants', error)}

@@ -13,6 +13,7 @@ const DialogContent = ({plantDetails})=>{
       <Paragraph><Text style={styles.dialogText}>Description: </Text>{plantDetails.description}</Paragraph>
       <Paragraph><Text style={styles.dialogText}>Seed To Crop: </Text>{plantDetails.seedToCrop}</Paragraph>
       <Paragraph><Text style={styles.dialogText}>Yield: </Text>{plantDetails.yield}</Paragraph>
+      <Paragraph><Text style={styles.dialogText} >Price: </Text>10$</Paragraph>
       <Paragraph><Text style={styles.dialogText}>Nutrition facts: </Text></Paragraph>
       <List.AccordionGroup>
       {plantDetails.nutritionFacts.items.map((ntf)=>{

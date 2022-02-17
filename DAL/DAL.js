@@ -5,7 +5,6 @@ const plantsURL = 'https://dev-agwa-public-static-assets-web.s3-us-west-2.amazon
 
 
 const getCategoryData =()=>{
-  // console.log('getCategoryData from DAL')
   const categories = axios.get(`${categoriesURL}`);
   return categories;
 }
@@ -14,12 +13,8 @@ const getPlantsData =()=>{
   return plants;
 }
 
-
-//https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${plantDetails.imageId}@3x.jpg
 const getImage = (imageId)=>{
   return `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${imageId}@3x.jpg`;
-                       // `https://dev-agwa-public-static-assets-web.s3-us-west-2.amazonaws.com/images/vegetables/${imageId}@3x.jpg`
-  // return image;
 }
 
 export {
